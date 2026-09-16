@@ -1,0 +1,376 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    overflow: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    padding: 20px;
+}
+
+.quiz-screen {
+    animation: slideInUp 0.6s ease-out;
+}
+
+.quiz-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.quiz-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+    animation: glow 2s ease-in-out infinite;
+}
+
+.quiz-header p {
+    font-size: 1.1rem;
+    color: #aaa;
+    font-style: italic;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    margin-bottom: 40px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background: linear-gradient(90deg, #e74c3c, #f39c12);
+    width: 0%;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 10px rgba(231, 76, 60, 0.8);
+}
+
+.question-container {
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid #e74c3c;
+    border-radius: 15px;
+    padding: 40px;
+    backdrop-filter: blur(10px);
+    animation: fadeIn 0.5s ease-in;
+}
+
+.question-number {
+    color: #e74c3c;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.question-container h2 {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    color: #fff;
+    line-height: 1.4;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.option {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 18px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.option:hover {
+    background: rgba(231, 76, 60, 0.2);
+    border-color: #e74c3c;
+    transform: translateX(10px);
+}
+
+.option input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #e74c3c;
+}
+
+.option.selected {
+    background: rgba(231, 76, 60, 0.3);
+    border-color: #e74c3c;
+    box-shadow: 0 0 15px rgba(231, 76, 60, 0.5);
+}
+
+.option.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.next-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+}
+
+.next-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.6);
+}
+
+.next-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.next-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.scare-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: jumpscareAppear 0.15s ease-in;
+}
+
+.scare-content {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.scare-overlay img {
+    max-width: 80vw;
+    max-height: 80vh;
+    object-fit: contain;
+    animation: scaleInJump 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.scare-message {
+    position: absolute;
+    font-size: 4rem;
+    font-weight: bold;
+    color: #e74c3c;
+    text-shadow: 0 0 30px #e74c3c, 0 0 60px #c0392b, 0 0 90px rgba(192, 57, 43, 0.8);
+    animation: messagePulse 0.6s ease-in-out;
+    pointer-events: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10000;
+}
+
+.result-screen {
+    background: rgba(0, 0, 0, 0.9);
+    border: 3px solid #e74c3c;
+    border-radius: 20px;
+    padding: 60px 40px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    animation: slideInUp 0.6s ease-out;
+}
+
+.result-screen h1 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+}
+
+.score {
+    margin: 40px 0;
+}
+
+.score h2 {
+    font-size: 2rem;
+    color: #f39c12;
+    margin-bottom: 15px;
+}
+
+.score p {
+    font-size: 1.1rem;
+    color: #aaa;
+    margin-bottom: 20px;
+}
+
+.restart-btn {
+    padding: 15px 50px;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+}
+
+.restart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.6);
+}
+
+.hidden {
+    display: none !important;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes glow {
+    0%, 100% {
+        text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+    }
+    50% {
+        text-shadow: 0 0 40px rgba(255, 0, 0, 0.8), 0 0 60px rgba(192, 57, 43, 0.6);
+    }
+}
+
+@keyframes jumpscareAppear {
+    from {
+        opacity: 0;
+        transform: scale(1.3);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes scaleInJump {
+    from {
+        transform: scale(0) rotate(-5deg);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+    }
+}
+
+@keyframes messagePulse {
+    0% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+    }
+    20%, 24%, 55% {
+        opacity: 0.3;
+    }
+}
+
+@media (max-width: 768px) {
+    .quiz-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .question-container {
+        padding: 25px;
+    }
+
+    .question-container h2 {
+        font-size: 1.4rem;
+    }
+
+    .option {
+        font-size: 1rem;
+        padding: 15px;
+    }
+
+    .scare-message {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .quiz-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .question-container {
+        padding: 20px;
+    }
+
+    .question-container h2 {
+        font-size: 1.2rem;
+    }
+
+    .option {
+        font-size: 0.95rem;
+        padding: 12px;
+    }
+
+    .scare-message {
+        font-size: 2rem;
+    }
+}
